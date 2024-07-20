@@ -12,10 +12,11 @@
 class StreamReassembler {
   private:
     // Your code here -- add private members as necessary.
-    std::map<size_t, std::string> _unassemble_strs;
-    size_t _next_assembled_idx;
-    size_t _unassembled_bytes_num;
-    size_t _eof_idx;
+    std::map<size_t, std::string> _unassemble_strs{};
+    size_t _next_assembled_idx{0};
+    size_t _unassembled_bytes_num{0};
+    bool _eof{};
+    size_t _eof_idx{0};
 
     ByteStream _output;  //!< The reassembled in-order byte stream
     size_t _capacity;    //!< The maximum number of bytes
