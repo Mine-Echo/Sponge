@@ -14,6 +14,12 @@
 //! the acknowledgment number and window size to advertise back to the
 //! remote TCPSender.
 class TCPReceiver {
+    // 初始序列号
+    WrappingInt32 _isn{0};
+    // 是否已收到syn
+    bool _syn_flag{};
+    // 是否收到fin
+    bool _fin_flag{};
     //! Our data structure for re-assembling bytes.
     StreamReassembler _reassembler;
 
