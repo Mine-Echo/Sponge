@@ -34,7 +34,7 @@ string ByteStream::peek_output(const size_t len) const {
 void ByteStream::pop_output(const size_t len) {
     int real_len = len > _buffer.size() ? _buffer.size() : len;
     _bytes_read += real_len;
-    _buffer = _buffer.substr(len);
+    _buffer = _buffer.substr(real_len);
 }
 
 //! Read (i.e., copy and then pop) the next "len" bytes of the stream
