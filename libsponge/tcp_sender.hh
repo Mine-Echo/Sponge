@@ -4,6 +4,7 @@
 #include "byte_stream.hh"
 #include "tcp_config.hh"
 #include "tcp_segment.hh"
+#include "timer.hh"
 #include "wrapping_integers.hh"
 
 #include <functional>
@@ -17,6 +18,19 @@
 //! segments if the retransmission timer expires.
 class TCPSender {
   private:
+    Timer _timer;
+    // syn
+    bool _syn_flag{};
+    // fin
+    bool _fin_flag{};
+    // 发送但未确认的segment
+    std::queue<TCPSegment> _segment_in_flight{};
+    // 发送但未确认的字节数
+    uint64_t _bytes_in_flight{0};
+    // 接收到的最大的ackno
+    uint64_t _recv_absolute_ackno{0};
+    // 接收端的窗口大小
+    uint16_t _window_size{1};
     //! our initial sequence number, the number for our SYN.
     WrappingInt32 _isn;
 
@@ -24,7 +38,7 @@ class TCPSender {
     std::queue<TCPSegment> _segments_out{};
 
     //! retransmission timer for the connection
-    unsigned int _initial_retransmission_timeout;
+    // unsigned int _initial_retransmission_timeout;
 
     //! outgoing stream of bytes that have not yet been sent
     ByteStream _stream;
