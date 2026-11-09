@@ -2,6 +2,7 @@
 #define SPONGE_LIBSPONGE_BYTE_STREAM_HH
 
 #include <string>
+#include <vector>
 
 //! \brief An in-order byte stream.
 
@@ -16,7 +17,10 @@ class ByteStream {
     // all, but if any of your tests are taking longer than a second,
     // that's a sign that you probably want to keep exploring
     // different approaches.
-    std::string _buffer{};
+    // std::string _buffer{};
+    std::vector<char> _buffer{}; // 环形缓冲区
+    size_t _head{0};  // 下一字节的读取位置
+    size_t _size{0};  // 当前有效字节数
     size_t _capacity;
     size_t _bytes_written{0};
     size_t _bytes_read{0};
